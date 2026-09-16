@@ -1,49 +1,49 @@
 # Reason Machines examples
 
-Run the Reason agent through the Reason Machines API.
+Run Reason on [DeepSWE](https://github.com/datacurve-ai/deep-swe) coding tasks in Docker.
 
-## Installation
+## Setup
 
-Install the Reason CLI:
+On macOS or Linux, install [Docker](https://docs.docker.com/get-started/get-docker/)
+and [uv](https://docs.astral.sh/uv/getting-started/installation/), and start Docker.
+You also need Git and curl. Run these commands in the same terminal:
 
 ```bash
-curl -LsSf https://reasonmachines.com/install.sh | bash
+git clone https://github.com/reason-machines/examples.git
+cd examples
+uv venv --python 3.12 .venv
+uv pip install --python .venv/bin/python \
+  https://github.com/reason-machines/examples/releases/download/latest/reason_machines_pier.tar.gz
+
+mkdir -p deep-swe
+curl -LsSf https://github.com/datacurve-ai/deep-swe/archive/0b9fabbb63b9104d678fe965e1632f2dd9eaa2ea.tar.gz \
+  | tar -xz --strip-components=1 -C deep-swe
 ```
 
-Install the Pier adapter with Python 3.12+:
+This installs Pier. The adapter installs the Reason CLI inside Docker automatically.
+
+## Run
+
+Get a [Reason API key](https://reasonmachines.ai/customize?tab=api) and enable
+`openai/gpt-5.6-luna` in your workspace's
+[Models settings](https://reasonmachines.ai/customize?tab=models).
+Replace the placeholder with your key, then run:
 
 ```bash
-pip install --upgrade https://github.com/reason-machines/examples/releases/download/latest/reason_machines_pier.tar.gz
-```
-
-<!--
-This installs Pier too. The adapter automatically installs the Linux x64/glibc Reason CLI
-inside each Docker task; it does not copy your host CLI into the container.
--->
-
-## Example: running DeepSWE
-
-Download the [DeepSWE tasks](pier-deepswe/#dataset) and get your `REASON_API_KEY` from the [Reason Machines dashboard](https://reasonmachines.ai/customize?tab=api).
-
-```bash
-export REASON_API_KEY="<your-reason-api-key>"
-pier run --path deep-swe/tasks \
+export REASON_API_KEY="YOUR_REASON_API_KEY"
+DOCKER_DEFAULT_PLATFORM=linux/amd64 .venv/bin/pier run \
+  --path deep-swe/tasks/csstree-shorthand-expansion-compression \
   --agent-import-path reasonmachines_pier:ReasonAgent \
-  --model openai/gpt-5.6-luna
+  --model openai/gpt-5.6-luna \
+  --jobs-dir outputs/pier
 ```
 
-`--agent-import-path reasonmachines_pier:ReasonAgent` loads the Reason adapter. Everything else uses standard [Pier options](https://github.com/datacurve-ai/pier#readme).
+This runs **one task** in Docker, including on Apple Silicon. Model/API charges may apply.
 
-## Citation
+Allow **up to 3 hours for the agent, plus 30 minutes for verification**.
+It can finish sooner. The first run also downloads several GB of Docker images.
+Keep your terminal and Docker running, and your computer awake.
 
-Cite the upstream [DeepSWE](https://github.com/datacurve-ai/deep-swe) and
-[Pier](https://github.com/datacurve-ai/pier) repositories alongside this example.
+Results and logs are saved in `outputs/pier/`. A completed run can still fail tests.
 
-```bibtex
-@misc{reasonmachines_examples,
-  author = {{Reason Machines}},
-  title = {Reason Machines Examples},
-  year = {2026},
-  howpublished = {\url{https://github.com/reason-machines/examples}}
-}
-```
+[More tasks and API-key permissions](pier-deepswe/README.md).
