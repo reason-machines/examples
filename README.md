@@ -13,7 +13,7 @@ git clone https://github.com/reason-machines/examples.git
 cd examples
 uv venv --python 3.12 .venv
 uv pip install --python .venv/bin/python \
-  https://github.com/reason-machines/examples/releases/download/v0.3.8/reason_machines_pier.tar.gz
+  https://github.com/reason-machines/examples/releases/download/v0.3.9/reason_machines_pier.tar.gz
 
 mkdir -p deep-swe
 curl -LsSf https://github.com/datacurve-ai/deep-swe/archive/0b9fabbb63b9104d678fe965e1632f2dd9eaa2ea.tar.gz \
