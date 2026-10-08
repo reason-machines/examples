@@ -1,6 +1,6 @@
 # Reason Machines examples
 
-Run Reason on [DeepSWE](https://github.com/datacurve-ai/deep-swe) coding tasks in Docker.
+Run Reason on [DeepSWE](https://github.com/datacurve-ai/deep-swe) coding tasks inside Docker.
 
 ## Setup
 
