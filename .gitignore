@@ -1,3 +1,4 @@
+# Local artifacts
 .venv/
 .runtime/
 datasets/
