@@ -49,3 +49,5 @@ Keep your terminal and Docker running, and your computer awake.
 Results and logs are saved in `outputs/pier/`. A completed run can still fail tests.
 
 [More tasks and API-key permissions](pier-deepswe/README.md).
+
+key swap check
